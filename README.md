@@ -85,16 +85,11 @@ http://127.0.0.1:5000
 - Conexao com banco de dados PostgreSQL
 - Alerta de baixo estoque na listagem e dashboard
 
-## Empacotamento para entrega
-
-Gerar um ZIP contendo todo o projeto (exceto venv e cache).
-
 ## Banco de dados
 
 - O schema esta em `database/schema.sql`.
 - Na primeira inicializacao, o sistema aplica o schema e cria o usuario admin padrao.
 - Conexao configurada por `DATABASE_URL` (arquivo `.env`).
-- Porta padrao do PostgreSQL no compose: `5433` (para evitar conflito com instalacoes locais em `5432`).
 
 ## Observacao (PEP 668)
 
