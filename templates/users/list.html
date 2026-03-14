@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Usuarios{% endblock %}
+{% block content %}
+<section class="card">
+    <div class="section-header">
+        <h2>Usuarios do sistema</h2>
+        <a class="button" href="{{ url_for('users.create_user') }}">Novo usuario</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Perfil</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.nome }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.perfil }}</td>
+                <td>{% if user.ativo %}Ativo{% else %}Inativo{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

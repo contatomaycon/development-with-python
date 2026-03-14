@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}{% if form_mode == 'edit' %}Editar Produto{% else %}Novo Produto{% endif %}{% endblock %}
+{% block content %}
+<section class="card">
+    <h2>{% if form_mode == 'edit' %}Editar produto{% else %}Cadastrar produto{% endif %}</h2>
+
+    <form method="post" class="form-grid validate-product">
+        <label for="nome">Nome *</label>
+        <input id="nome" name="nome" required value="{{ form_data.get('nome', '') }}">
+
+        <label for="descricao">Descricao</label>
+        <textarea id="descricao" name="descricao" rows="3">{{ form_data.get('descricao', '') }}</textarea>
+
+        <label for="categoria">Categoria</label>
+        <input id="categoria" name="categoria" value="{{ form_data.get('categoria', '') }}">
+
+        <label for="preco">Preco *</label>
+        <input id="preco" name="preco" type="number" min="0.01" step="0.01" required value="{{ form_data.get('preco', '') }}">
+
+        <label for="quantidade">Quantidade atual *</label>
+        <input id="quantidade" name="quantidade" type="number" min="0" step="1" required value="{{ form_data.get('quantidade', '') }}">
+
+        <label for="quantidade_minima">Quantidade minima *</label>
+        <input id="quantidade_minima" name="quantidade_minima" type="number" min="0" step="1" required value="{{ form_data.get('quantidade_minima', '') }}">
+
+        <button type="submit">Salvar</button>
+    </form>
+</section>
+{% endblock %}

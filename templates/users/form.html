@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Novo Usuario{% endblock %}
+{% block content %}
+<section class="card">
+    <h2>Cadastrar usuario</h2>
+
+    <form method="post" class="form-grid">
+        <label for="nome">Nome *</label>
+        <input id="nome" name="nome" required>
+
+        <label for="email">Email *</label>
+        <input id="email" name="email" type="email" required>
+
+        <label for="senha">Senha *</label>
+        <input id="senha" name="senha" type="password" minlength="6" required>
+
+        <label for="perfil">Perfil *</label>
+        <select id="perfil" name="perfil" required>
+            <option value="comum">Comum</option>
+            <option value="admin">Administrador</option>
+        </select>
+
+        <button type="submit">Salvar usuario</button>
+    </form>
+</section>
+{% endblock %}

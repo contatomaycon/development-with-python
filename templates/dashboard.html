@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="grid grid-2">
+    <article class="card">
+        <h2>Resumo</h2>
+        <p><strong>Usuario:</strong> {{ session.get('user_nome') }}</p>
+        <p><strong>Perfil:</strong> {{ session.get('perfil') }}</p>
+        <p><strong>Total de produtos:</strong> {{ total_products }}</p>
+        <p><strong>Itens em alerta:</strong> {{ low_stock|length }}</p>
+    </article>
+
+    <article class="card">
+        <h2>Acoes rapidas</h2>
+        <div class="actions">
+            <a class="button" href="{{ url_for('products.list_products') }}">Ver estoque</a>
+            {% if session.get('perfil') == 'admin' %}
+            <a class="button" href="{{ url_for('products.create_product') }}">Cadastrar produto</a>
+            <a class="button" href="{{ url_for('users.create_user') }}">Cadastrar usuario</a>
+            {% endif %}
+        </div>
+    </article>
+</section>
+
+<section class="card">
+    <h2>Produtos abaixo do minimo</h2>
+    {% if low_stock %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Atual</th>
+                    <th>Minimo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in low_stock %}
+                <tr class="row-alert">
+                    <td>{{ item.nome }}</td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>{{ item.quantidade_minima }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhum item em alerta no momento.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Produtos{% endblock %}
+{% block content %}
+<section class="card">
+    <div class="section-header">
+        <h2>Estoque de produtos</h2>
+        {% if session.get('perfil') == 'admin' %}
+        <a class="button" href="{{ url_for('products.create_product') }}">Novo produto</a>
+        {% endif %}
+    </div>
+
+    {% if products %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Preco</th>
+                <th>Quantidade</th>
+                <th>Minimo</th>
+                <th>Status</th>
+                {% if session.get('perfil') == 'admin' %}
+                <th>Acoes</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in products %}
+            <tr class="{% if item.baixo_estoque %}row-alert{% endif %}">
+                <td>{{ item.nome }}</td>
+                <td>{{ item.categoria or '-' }}</td>
+                <td>R$ {{ '%.2f'|format(item.preco) }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>{{ item.quantidade_minima }}</td>
+                <td>
+                    {% if item.baixo_estoque %}
+                    <span class="badge badge-danger">Baixo estoque</span>
+                    {% else %}
+                    <span class="badge badge-ok">OK</span>
+                    {% endif %}
+                </td>
+                {% if session.get('perfil') == 'admin' %}
+                <td>
+                    <a class="link" href="{{ url_for('products.edit_product', product_id=item.id) }}">Editar</a>
+                    <form method="post" class="inline-form" action="{{ url_for('products.register_movement', product_id=item.id) }}">
+                        <select name="tipo" required>
+                            <option value="entrada">Entrada</option>
+                            <option value="saida">Saida</option>
+                        </select>
+                        <input name="quantidade" type="number" min="1" step="1" required placeholder="Qtd">
+                        <input name="motivo" type="text" placeholder="Motivo" maxlength="80">
+                        <button type="submit">Registrar</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Nenhum produto cadastrado.</p>
+    {% endif %}
+</section>
+{% endblock %}
